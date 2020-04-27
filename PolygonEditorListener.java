@@ -35,7 +35,7 @@ public class PolygonEditorListener extends MouseAdapter
                 DraggingPoint = firstCollision;
             }
             
-            ScreenUpdater.DrawPolygon();
+            ScreenUpdater.Update();
         }
         else
         {
@@ -60,7 +60,7 @@ public class PolygonEditorListener extends MouseAdapter
             GlobalVars.UserDesign.ypoints = tempCopyForDelete.ypoints;
             GlobalVars.UserDesign.npoints = tempCopyForDelete.npoints;
             
-            ScreenUpdater.DrawPolygon();
+            ScreenUpdater.Update();
         }
     }
 

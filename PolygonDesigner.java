@@ -22,8 +22,9 @@ public class PolygonDesigner {
         
         GlobalVars.appWindow.getContentPane().setBackground(Color.LIGHT_GRAY);
         
+        GlobalVars.appWindow.setResizable(false);
         GlobalVars.appWindow.setVisible(true);
-
+        
         GlobalVars.appGraphics = GlobalVars.appWindow.getContentPane().getGraphics();
     }
 }
