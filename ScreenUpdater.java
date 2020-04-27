@@ -9,13 +9,13 @@ public class ScreenUpdater
             /* y */ 0,
             /* width */ GlobalVars.WIDTH,
             /* height */ GlobalVars.HEIGHT);
-        
+
         GlobalVars.appGraphics.setColor(
             /*Baby blue*/
             new Color(/*Red*/ 125, /*Green*/ 175, /*Blue*/ 255));
         
         GlobalVars.appGraphics.fillPolygon(/*Polygon p*/ GlobalVars.UserDesign);
-
+        
         GlobalVars.appGraphics.setColor(Color.BLUE);
         for (var i = 0; i < GlobalVars.UserDesign.npoints; i++) 
         {

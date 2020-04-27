@@ -1,5 +1,6 @@
 import java.awt.Polygon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import java.awt.Graphics;
 
 public class GlobalVars
@@ -12,6 +13,7 @@ public class GlobalVars
     public static final int POINTSIZE = 10;
 
     public static JFrame appWindow = new JFrame(/*String title*/ "Polygon designer");
+    public static JLabel coordLabel = new JLabel();
     public static Graphics appGraphics;
 
     // The polygon we're editing with this app

@@ -5,57 +5,78 @@ import java.awt.Polygon;
 
 public class PolygonEditorListener extends MouseAdapter
 {
+    // set this to -1 when not moving any point,
+    // 2 to represent "currently click & dropping point with index 2"
+    public Integer DraggingPoint;
+
     @Override
     public void mousePressed(MouseEvent e) 
     {
+        Integer firstCollision = firstPolygonPointCollision(/*MouseEvent clickToCheck*/ e);
+
         if (SwingUtilities.isLeftMouseButton(/*MouseEvent anEvent*/ e)) 
         {
-            GlobalVars.UserDesign.addPoint(e.getX(), e.getY());
-            
-            ScreenUpdater.DrawPolygon();
-        }
-        else 
-        {            
-            // check if any of the polygons are close to this click
-            for (var i = 0; i < GlobalVars.UserDesign.npoints; i++) 
+            if (firstCollision == null)
             {
-                System.out.println(i);
-
-                if (Math.abs(e.getX() - GlobalVars.UserDesign.xpoints[i])
-                        <= (GlobalVars.POINTSIZE / 2)
-                    && Math.abs(e.getY() - GlobalVars.UserDesign.ypoints[i])
-                        <= (GlobalVars.POINTSIZE / 2))
+                if (DraggingPoint == null) 
                 {
-                    // This is one of the things I hate about
-                    // pre-defined classes like Polygon. It has 1000 methods
-                    // I don't need and won't use, but it doesn't
-                    // support removing a point because the points are defined
-                    // as fixed arrays.....
-                    //
-                    // I guess I'm forced
-                    // to create a new polygon and copy each point except
-                    // the one I want to delete? Or if I was smart I could,
-                    // now that I understand this class doesn't fit my need,
-                    // ditch it and implement it by myself.
-                    // choices choices...
-                    System.out.println("Delete " + i);
-                    Polygon tempCopyForDelete = new Polygon();
-                    for (var y = 0; y < GlobalVars.UserDesign.npoints; y++) 
-                    {
-                        if (i == y) { continue; }
-                        tempCopyForDelete.addPoint(
-                            /* x */ GlobalVars.UserDesign.xpoints[y],
-                            /* y */ GlobalVars.UserDesign.ypoints[y]);
-                    }
-                    GlobalVars.UserDesign.xpoints = tempCopyForDelete.xpoints;
-                    GlobalVars.UserDesign.ypoints = tempCopyForDelete.ypoints;
-                    GlobalVars.UserDesign.npoints = tempCopyForDelete.npoints;
-                    
-                    break;
+                    GlobalVars.UserDesign.addPoint(e.getX(), e.getY());
                 }
+                else 
+                {
+                    // release dragging point
+                    GlobalVars.UserDesign.xpoints[DraggingPoint] = e.getX();
+                    GlobalVars.UserDesign.ypoints[DraggingPoint] = e.getY();
+                    DraggingPoint = null;
+                }
+            }
+            else 
+            {
+                DraggingPoint = firstCollision;
             }
             
             ScreenUpdater.DrawPolygon();
         }
+        else
+        {
+            if (firstCollision == null) { return ;}
+            
+            // Now I understand that the pre-defined class Polygon
+            // doesn't really fit my need at all. It has many
+            // methods I won't need, and it doesn't support
+            // removing points which is one of the main things
+            // I need to be able to do. I should just refactor
+            // this to use my own class or even just 2x ArrayList<int>
+            System.out.println("Delete " + firstCollision);
+            Polygon tempCopyForDelete = new Polygon();
+            for (var i = 0; i < GlobalVars.UserDesign.npoints; i++) 
+            {
+                if (firstCollision == i) { continue; }
+                tempCopyForDelete.addPoint(
+                    /* x */ GlobalVars.UserDesign.xpoints[i],
+                    /* y */ GlobalVars.UserDesign.ypoints[i]);
+            }
+            GlobalVars.UserDesign.xpoints = tempCopyForDelete.xpoints;
+            GlobalVars.UserDesign.ypoints = tempCopyForDelete.ypoints;
+            GlobalVars.UserDesign.npoints = tempCopyForDelete.npoints;
+            
+            ScreenUpdater.DrawPolygon();
+        }
+    }
+
+    private Integer firstPolygonPointCollision(MouseEvent clickToCheck)
+    {
+        for (var i = 0; i < GlobalVars.UserDesign.npoints; i++) 
+        {
+            if (Math.abs(clickToCheck.getX() - GlobalVars.UserDesign.xpoints[i])
+                <= (GlobalVars.POINTSIZE / 2)
+                && Math.abs(clickToCheck.getY() - GlobalVars.UserDesign.ypoints[i])
+                    <= (GlobalVars.POINTSIZE / 2))
+            {
+                return i;
+            }
+        }
+
+        return null;
     }
 }
