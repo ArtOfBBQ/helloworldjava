@@ -3,7 +3,13 @@ import java.awt.Color;
 public class ScreenUpdater
 {
     public static void DrawPolygon()
-    {        
+    {
+        GlobalVars.appGraphics.clearRect(
+            /* x */ 0,
+            /* y */ 0,
+            /* width */ GlobalVars.WIDTH,
+            /* height */ GlobalVars.HEIGHT);
+        
         GlobalVars.appGraphics.setColor(
             /*Baby blue*/
             new Color(/*Red*/ 125, /*Green*/ 175, /*Blue*/ 255));
@@ -18,8 +24,8 @@ public class ScreenUpdater
             GlobalVars.appGraphics.fillOval(
                 /* x */ GlobalVars.UserDesign.xpoints[i] - 5,
                 /* y */ GlobalVars.UserDesign.ypoints[i] - 5,
-                /* width */ 10,
-                /* height */ 10);
+                /* width */ GlobalVars.POINTSIZE,
+                /* height */ GlobalVars.POINTSIZE);
         }
     }
 }

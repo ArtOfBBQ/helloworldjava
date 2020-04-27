@@ -8,6 +8,9 @@ public class GlobalVars
     public static final int WIDTH = 640;
     public static final int HEIGHT = 400;
 
+    // the size of one of the 'polygon corner' point widgets on screen
+    public static final int POINTSIZE = 10;
+
     public static JFrame appWindow = new JFrame(/*String title*/ "Polygon designer");
     public static Graphics appGraphics;
 

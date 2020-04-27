@@ -15,18 +15,20 @@ import java.awt.Color;
 public class PolygonDesigner {
     public static void main(final String[] arguments)
     {
-        GlobalVars.UserDesign.addPoint(/*int x*/ 104, /*int y*/ 231);
-        GlobalVars.UserDesign.addPoint(105, 114);
-        GlobalVars.UserDesign.addPoint(145, 114);
-        GlobalVars.UserDesign.addPoint(144, 229);
+        // GlobalVars.UserDesign.addPoint(/*int x*/ 104, /*int y*/ 231);
+        // GlobalVars.UserDesign.addPoint(105, 114);
+        // GlobalVars.UserDesign.addPoint(145, 114);
+        // GlobalVars.UserDesign.addPoint(144, 229);
         
         GlobalVars.appWindow.setSize(GlobalVars.WIDTH, GlobalVars.HEIGHT);
         GlobalVars.appWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        GlobalVars.appWindow.getContentPane().addMouseListener(new PolygonEditorListener());
+        GlobalVars.appWindow.getContentPane().addMouseListener(
+            new PolygonEditorListener());
+
         GlobalVars.appWindow.getContentPane().setBackground(Color.LIGHT_GRAY);
         
         GlobalVars.appWindow.setVisible(true);
 
-        GlobalVars.appGraphics = GlobalVars.appWindow.getGraphics();
+        GlobalVars.appGraphics = GlobalVars.appWindow.getContentPane().getGraphics();
     }
 }
